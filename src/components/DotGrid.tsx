@@ -42,8 +42,8 @@ interface DotGridProps {
 const DotGrid: React.FC<DotGridProps> = ({
     dotSize = 16,
     gap = 32,
-    baseColor = '#5227FF',
-    activeColor = '#5227FF',
+    baseColor = '#1a1a1a',
+    activeColor = '#4a4a4a',
     proximity = 150,
     speedTrigger = 100,
     shockRadius = 250,
@@ -209,9 +209,18 @@ const DotGrid: React.FC<DotGridProps> = ({
                     gsap.killTweensOf(dot);
 
                     // Simplified "push" effect without InertiaPlugin
-                    const pushFactor = 0.2; // Adjust for strength
-                    const pushX = (dot.cx - pr.x) / dist * speed * pushFactor;
-                    const pushY = (dot.cy - pr.y) / dist * speed * pushFactor;
+                    const pushFactor = 0.05; // Adjust for strength
+                    let pushX = (dot.cx - pr.x) / dist * speed * pushFactor;
+                    let pushY = (dot.cy - pr.y) / dist * speed * pushFactor;
+
+                    // Clamp displacement to avoid violent jumping
+                    const maxDisp = 50;
+                    const disp = Math.hypot(pushX, pushY);
+                    if (disp > maxDisp) {
+                        const scale = maxDisp / disp;
+                        pushX *= scale;
+                        pushY *= scale;
+                    }
 
                     gsap.to(dot, {
                         xOffset: pushX,

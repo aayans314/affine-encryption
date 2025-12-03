@@ -57,12 +57,13 @@ function App() {
         <DotGrid
           dotSize={10}
           gap={20}
-          baseColor="#333"
-          activeColor="#fff"
+          baseColor="#1a1a1a"
+          activeColor="#4a4a4a"
           proximity={120}
           shockRadius={250}
-          shockStrength={5}
-          returnDuration={1.5}
+          shockStrength={2}
+          returnDuration={2}
+          maxSpeed={500}
         />
       </div>
 
