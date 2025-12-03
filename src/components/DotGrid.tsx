@@ -243,48 +243,11 @@ const DotGrid: React.FC<DotGridProps> = ({
             }
         };
 
-        const onClick = (e: MouseEvent) => {
-            const rect = canvasRef.current?.getBoundingClientRect();
-            if (!rect) return;
-            const cx = e.clientX - rect.left;
-            const cy = e.clientY - rect.top;
-            for (const dot of dotsRef.current) {
-                const dist = Math.hypot(dot.cx - cx, dot.cy - cy);
-                if (dist < shockRadius && !dot._inertiaApplied) {
-                    dot._inertiaApplied = true;
-                    gsap.killTweensOf(dot);
-                    const falloff = Math.max(0, 1 - dist / shockRadius);
-                    const pushX = (dot.cx - cx) * shockStrength * falloff;
-                    const pushY = (dot.cy - cy) * shockStrength * falloff;
-
-                    gsap.to(dot, {
-                        xOffset: pushX,
-                        yOffset: pushY,
-                        duration: 0.3,
-                        ease: 'power2.out',
-                        onComplete: () => {
-                            gsap.to(dot, {
-                                xOffset: 0,
-                                yOffset: 0,
-                                duration: returnDuration,
-                                ease: 'elastic.out(1,0.75)',
-                                onComplete: () => {
-                                    dot._inertiaApplied = false;
-                                }
-                            });
-                        }
-                    });
-                }
-            }
-        };
-
         const throttledMove = throttle(onMove, 50);
         window.addEventListener('mousemove', throttledMove, { passive: true });
-        window.addEventListener('click', onClick);
 
         return () => {
             window.removeEventListener('mousemove', throttledMove);
-            window.removeEventListener('click', onClick);
         };
     }, [maxSpeed, speedTrigger, proximity, returnDuration, shockRadius, shockStrength]);
 
