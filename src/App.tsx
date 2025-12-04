@@ -4,6 +4,7 @@ import './App.css';
 import { affineEncrypt, affineDecrypt, modInverse } from './utils/affine';
 import DotGrid from './components/DotGrid';
 import SpotlightCard from './components/SpotlightCard';
+import BruteForce from './components/BruteForce';
 
 function App() {
   const [text, setText] = useState('');
@@ -249,6 +250,21 @@ function App() {
             </div>
           </SpotlightCard>
         )}
+
+        {/* Brute Force Attack Section */}
+        <SpotlightCard
+          className="glass-panel full-width"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <BruteForce
+            cipherText={mode === 'encrypt' ? result : text}
+            originalText={mode === 'encrypt' ? text : result}
+            correctA={!isNaN(a) ? a : undefined}
+            correctB={!isNaN(b) ? b : undefined}
+          />
+        </SpotlightCard>
       </div>
     </>
   );
