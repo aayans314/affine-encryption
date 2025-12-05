@@ -77,9 +77,6 @@ const CompositionDemo = () => {
         <div className="composition-container">
             <div className="composition-header">
                 <h3>Function Composition</h3>
-                <p className="composition-subtitle">
-                    Demonstrate that two affine functions compose into a single affine function with one inverse
-                </p>
             </div>
 
             <div className="composition-theory">
