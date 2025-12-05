@@ -43,3 +43,22 @@ export const affineDecrypt = (text: string, a: number, b: number): string => {
     return "Error: Invalid 'a' value";
   }
 };
+
+/**
+ * Compose two affine functions into a single affine function
+ * If f1(x) = a1*x + b1 and f2(x) = a2*x + b2
+ * Then f2(f1(x)) = a2*(a1*x + b1) + b2 = (a2*a1)*x + (a2*b1 + b2)
+ * Returns the combined keys { a, b } where:
+ *   a = (a1 * a2) mod 26
+ *   b = (a2 * b1 + b2) mod 26
+ */
+export const composeAffineKeys = (
+  a1: number,
+  b1: number,
+  a2: number,
+  b2: number
+): { a: number; b: number } => {
+  const a = (a1 * a2) % 26;
+  const b = (a2 * b1 + b2) % 26;
+  return { a, b };
+};

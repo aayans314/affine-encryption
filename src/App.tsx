@@ -5,6 +5,7 @@ import { affineEncrypt, affineDecrypt, modInverse } from './utils/affine';
 import DotGrid from './components/DotGrid';
 import SpotlightCard from './components/SpotlightCard';
 import BruteForce from './components/BruteForce';
+import CompositionDemo from './components/CompositionDemo';
 
 function App() {
   const [text, setText] = useState('');
@@ -264,6 +265,16 @@ function App() {
             correctA={!isNaN(a) ? a : undefined}
             correctB={!isNaN(b) ? b : undefined}
           />
+        </SpotlightCard>
+
+        {/* Composition Demonstration Section */}
+        <SpotlightCard
+          className="glass-panel full-width"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <CompositionDemo />
         </SpotlightCard>
       </div>
     </>
